@@ -23,11 +23,6 @@ public class MathExpressionResolver {
 	private static final char LEFT_PARENTESIS = '(';
 	private static final char RIGHT_PARENTESIS = ')';
 
-	
-	
-	public MathExpressionResolver() {
-	}
-
 	public boolean isLetterOrDigit(char ch) {
 		return Character.isLetterOrDigit(ch);
 	}
@@ -49,23 +44,26 @@ public class MathExpressionResolver {
 			
 			if(isLetterOrDigit(actualChar)) {
 				output.append(actualChar);
+				continue;
 			}
-			else if(actualChar == LEFT_PARENTESIS) {
+			
+			switch (actualChar) {
+			case LEFT_PARENTESIS:
 				deque.push(actualChar);
-			}
-			else if(actualChar == RIGHT_PARENTESIS) {
+				break;
+			case RIGHT_PARENTESIS:
 				while (!deque.isEmpty() && deque.peek() != LEFT_PARENTESIS) {
 					output.append(deque.pop());
 				}
 				deque.pop();
-			}
-			else {
+				break;
+			default:
 				while(!deque.isEmpty() && getPrecedence(actualChar) <= getPrecedence(deque.peek())) {
 					output.append(deque.pop());
 				}
 				deque.push(actualChar);
+				break;
 			}
-			
 		}
 
 		while(!deque.isEmpty()) {
@@ -107,7 +105,7 @@ public class MathExpressionResolver {
 				deque.push(operand);
 			}
 		}
-		return Double.valueOf(deque.pop()).intValue();
+		return deque.pop().intValue();
 	}
 	
 	
