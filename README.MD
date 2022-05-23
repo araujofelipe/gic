@@ -1,0 +1,5 @@
+ ./mvnw clean test
+
+
+1 - SELECT count(r.*) FROM HISTORICO h INNER JOIN RESSUPRIMENTO r ON h.ID_TAREFA = r.ID_TAREFA GROUP BY h.DATA_HORA;
+
